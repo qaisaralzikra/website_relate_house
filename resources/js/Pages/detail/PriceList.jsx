@@ -165,6 +165,8 @@ function DynamicPriceList({ data }) {
     const first = services;
     const categories = first?.image_services || [];
 
+    console.log(services)
+
     if (categories.length === 0) {
         return (
             <section className="relative py-20 overflow-hidden">
