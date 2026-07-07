@@ -116,7 +116,7 @@ function DynamicPriceList({ services }) {
                         </SectionTitle>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 items-start justify-items-center">
                             {priceServices
-                                .filter((ps) => ps.id_image_service = cat.id)
+                                .filter((ps) => Number(ps.id_image_service) === cat.id)
                                 .map((ps, i) => (
                                     <PricingCard
                                         key={ps.id}
