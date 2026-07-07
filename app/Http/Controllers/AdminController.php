@@ -253,17 +253,37 @@ class AdminController extends Controller
                 ]);
             }
 
+            // ── Perbaikan Query Tahunan (Menghitung Akumulasi Unik Harian per Bulan) ──
+            // ── Menggunakan $monthlyStatsQuery dengan Benar ──
             $monthlyStatsQuery = Visitor::where('visited_at', '>=', now()->subMonthsNoOverflow(11)->startOfMonth());
             $driver = DB::connection()->getDriverName();
+
             if ($driver === 'mysql') {
-                $monthlyStatsQuery->selectRaw("DATE_FORMAT(visited_at, '%Y-%m') as month, COUNT(*) as hits, COUNT(DISTINCT ip_address) as unique_visitors");
+                // Modifikasi $monthlyStatsQuery yang sudah ada untuk dijadikan Subquery
+                $subQuery = $monthlyStatsQuery
+                    ->selectRaw("DATE_FORMAT(visited_at, '%Y-%m') as month, DATE(visited_at) as date, COUNT(DISTINCT ip_address) as daily_unique, COUNT(*) as daily_hits")
+                    ->groupBy('month', 'date');
+
+                // Query utama untuk menjumlahkan (SUM) hasil unik harian ke dalam bulan terkait
+                $monthlyStats = DB::table(DB::raw("({$subQuery->toSql()}) as sub"))
+                    ->mergeBindings($subQuery->getQuery())
+                    ->selectRaw("month, SUM(daily_hits) as hits, SUM(daily_unique) as unique_visitors")
+                    ->groupBy('month')
+                    ->get()
+                    ->keyBy('month');
             } else {
-                $monthlyStatsQuery->selectRaw("strftime('%Y-%m', visited_at) as month, COUNT(*) as hits, COUNT(DISTINCT ip_address) as unique_visitors");
+                // Modifikasi $monthlyStatsQuery untuk SQLite (testing/local)
+                $subQuery = $monthlyStatsQuery
+                    ->selectRaw("strftime('%Y-%m', visited_at) as month, DATE(visited_at) as date, COUNT(DISTINCT ip_address) as daily_unique, COUNT(*) as daily_hits")
+                    ->groupBy('month', 'date');
+
+                $monthlyStats = DB::table(DB::raw("({$subQuery->toSql()}) as sub"))
+                    ->mergeBindings($subQuery->getQuery())
+                    ->selectRaw("month, SUM(daily_hits) as hits, SUM(daily_unique) as unique_visitors")
+                    ->groupBy('month')
+                    ->get()
+                    ->keyBy('month');
             }
-            $monthlyStats = $monthlyStatsQuery->groupBy('month')
-                ->orderBy('month')
-                ->get()
-                ->keyBy('month');
 
             $yearly = collect();
             for ($i = 11; $i >= 0; $i--) {
@@ -271,8 +291,10 @@ class AdminController extends Controller
                 $monthKey = $date->format('Y-m');
                 $monthName = $localeMonths[(int) $date->format('n') - 1];
                 $stat = $monthlyStats[$monthKey] ?? null;
+
                 $yearly->push([
                     'month' => $monthName,
+                    // Sekarang nilainya adalah total penjumlahan dari unique visitor harian sepanjang bulan itu
                     'visitors' => (int) ($stat->unique_visitors ?? 0),
                     'pageViews' => (int) ($stat->hits ?? 0),
                 ]);
