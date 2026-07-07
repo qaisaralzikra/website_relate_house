@@ -65,7 +65,7 @@ export default function Navbar() {
                 <div className="flex items-center justify-between h-16 lg:h-20">
                     {/* Logo */}
                     <motion.a
-                        href="#hero"
+                        href="https://relatehouse.id/#hero"
                         onClick={() => setOpen(false)}
                         whileHover={{ scale: 1.05, rotate: -2 }}
                         whileTap={{ scale: 0.95 }}
