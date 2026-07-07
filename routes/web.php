@@ -12,6 +12,12 @@ Route::get('/login', [AdminController::class, 'login'])->name('login');
 Route::post('/login', [AdminController::class, 'loginSubmit']);
 Route::get('/', [HomeController::class, 'index']);
 
+Route::get('/clear-cache', function() {
+    \Artisan::call('view:clear');
+    \Artisan::call('cache:clear');
+    return "Cache berhasil dibersihkan! Silakan cek kembali halaman utama.";
+});
+
 Route::post('/logout', [AdminController::class, 'logout']);
 Route::post('/cta/send-email', [CtaSectionController::class, 'sendEmail']);
 Route::get('/detail/service/{id}', [HomeController::class, 'detailService']);
