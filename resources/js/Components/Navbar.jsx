@@ -115,7 +115,7 @@ export default function Navbar() {
                             </motion.div>
                         ))}
                         <motion.a
-                            href="#cta"
+                            href="https://relatehouse.id/#cta"
                             custom={navLinks.length}
                             variants={linkVariants}
                             whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(252, 164, 75, 0.4)" }}
@@ -210,7 +210,7 @@ export default function Navbar() {
                                 className="pt-4"
                             >
                                 <motion.a
-                                    href="#cta"
+                                    href="https://relatehouse.id/#cta"
                                     onClick={() => setOpen(false)}
                                     whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(252, 164, 75, 0.4)" }}
                                     whileTap={{ scale: 0.95 }}
