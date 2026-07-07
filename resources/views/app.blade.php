@@ -44,8 +44,8 @@
 
     <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
+            "@@context": "https://schema.org",
+            "@@type": "LocalBusiness",
             "name": "Relate House",
             "url": "https://relatehouse.id",
             "logo": "{{ asset('assets/Logo Relate5.png') }}",
@@ -59,7 +59,7 @@
                 "addressCountry": "ID"
             },
             "contactPoint": {
-                "@type": "ContactPoint",
+                "@@type": "ContactPoint",
                 "telephone": "+62-821-9240-4308",
                 "contactType": "customer service"
             }
