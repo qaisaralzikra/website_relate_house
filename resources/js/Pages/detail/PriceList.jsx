@@ -119,40 +119,18 @@ function DynamicPriceList({ services, isAdmin }) {
         isAdmin ? (categories[0]?.id ?? null) : null,
     );
 
-    const filteredCategories = isAdmin
-        ? categories.filter((c) => c.id === selectedCatId)
-        : categories;
+    // const filteredCategories = isAdmin
+    //     ? categories.filter((c) => c.id === selectedCatId)
+    //     : categories;
+
+    // console.log("Filtered Categories:", filteredCategories);
+    // console.log("Price Services:", priceServices);
+    // console.log("Selected Category ID:", selectedCatId);
+    // console.log("All Categories:", categories);
 
     return (
         <div>
-            {isAdmin && categories.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2 px-4 sm:px-6 lg:px-[70px] pt-6 pb-2">
-                    <button
-                        onClick={() => setSelectedCatId(null)}
-                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                            selectedCatId === null
-                                ? "bg-primary text-white shadow-md"
-                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        }`}
-                    >
-                        Semua
-                    </button>
-                    {categories.map((cat) => (
-                        <button
-                            key={cat.id}
-                            onClick={() => setSelectedCatId(cat.id)}
-                            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                                selectedCatId === cat.id
-                                    ? "bg-primary text-white shadow-md"
-                                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                            }`}
-                        >
-                            {cat.name}
-                        </button>
-                    ))}
-                </div>
-            )}
-            {filteredCategories.map((cat, catIndex) => (
+            {categories.map((cat, catIndex) => (
                 <div key={cat.id} className="relative py-20 overflow-hidden">
                     <div className="h-[276px] mx-4 sm:mx-6 lg:mx-[70px] rounded-[40px] overflow-hidden relative text-center flex items-center justify-center mb-[40px]">
                         <img
@@ -201,19 +179,58 @@ function DynamicPriceList({ services, isAdmin }) {
 
 export default function PriceList({ data, isAdmin }) {
     const targetData = data?.image_services ? data : data?.services || null;
-
-    if (targetData && targetData?.price_services?.length > 0) {
-        return <DynamicPriceList services={targetData} isAdmin={isAdmin} />;
-    }
+    const services = Array.isArray(targetData)
+        ? targetData
+        : targetData
+          ? [targetData]
+          : [];
+    const [selectedServiceId, setSelectedServiceId] = useState(
+        services[0]?.id ?? null,
+    );
+    const selectedService = services.find((s) => s.id === selectedServiceId);
 
     return (
-        <section className="relative py-20 overflow-hidden">
-            <div className="flex items-center justify-center">
-                <img
-                    src="https://st2.depositphotos.com/18722762/88115/v/600/depositphotos_881154956-stock-illustration-data-vector-illustration-featuring-empty.jpg"
-                    alt="Data Kosong"
+        <div>
+            {/* 1. Tombol Navisgasi Service diletakkan di paling atas render utama */}
+            {isAdmin && services.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2 px-4 sm:px-6 lg:px-[70px] pt-6 pb-2">
+                    {services.map((svc) => (
+                        <button
+                            key={svc.id}
+                            onClick={() => setSelectedServiceId(svc.id)}
+                            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                                selectedServiceId === svc.id
+                                    ? "bg-primary text-white shadow-md"
+                                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                            }`}
+                        >
+                            {svc.title}
+                        </button>
+                    ))}
+                </div>
+            )}
+
+            {/* 2. Pengecekan data kosong dipindah ke bawah setelah menu navigasi */}
+            {!selectedService?.price_services?.length ? (
+                <section className="relative py-20 overflow-hidden">
+                    <div className="flex flex-col items-center justify-center gap-4">
+                        <img
+                            src="https://st2.depositphotos.com/18722762/88115/v/600/depositphotos_881154956-stock-illustration-data-vector-illustration-featuring-empty.jpg"
+                            alt="Data Kosong"
+                            className="max-w-xs"
+                        />
+                        <p className="text-gray-500 font-medium">
+                            Belum ada paket tersedia untuk service ini.
+                        </p>
+                    </div>
+                </section>
+            ) : (
+                /* 3. Render list jika data price_services tersedia */
+                <DynamicPriceList
+                    services={selectedService}
+                    isAdmin={isAdmin}
                 />
-            </div>
-        </section>
+            )}
+        </div>
     );
 }
