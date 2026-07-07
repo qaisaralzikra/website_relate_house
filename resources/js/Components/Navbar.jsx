@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-    { name: "Beranda", href: "#hero" },
-    { name: "Tentang", href: "#about" },
-    { name: "Layanan", href: "#services" },
-    { name: "Portfolio", href: "#portfolio" },
-    { name: "Testimoni", href: "#testimonials" },
-    { name: "Kontak", href: "#footer" },
+    { name: "Beranda", href: "https://relatehouse.id/#hero" },
+    { name: "Tentang", href: "https://relatehouse.id/#about" },
+    { name: "Layanan", href: "https://relatehouse.id/#services" },
+    { name: "Portfolio", href: "https://relatehouse.id/#portfolio" },
+    { name: "Testimoni", href: "https://relatehouse.id/#testimonials" },
+    { name: "Kontak", href: "https://relatehouse.id/#footer" },
 ];
 
 import Logo from "../../../public/assets/Logo Relate6.webp";
