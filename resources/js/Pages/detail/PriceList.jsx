@@ -161,11 +161,13 @@ function PricingCard({ plan, index }) {
 }
 
 function DynamicPriceList({ data }) {
-    const services = data?.services || [];
-    const first = services;
-    const categories = first?.image_services || [];
+    const services = Array.isArray(data?.services)
+        ? data.services[0]
+        : data?.services;
+    const categories = services?.image_services || [];
+    const priceServices = services?.price_services || [];
 
-    console.log(services)
+    console.log(services);
 
     if (categories.length === 0) {
         return (
@@ -202,7 +204,7 @@ function DynamicPriceList({ data }) {
                             Pilihan <span className="text-primary">Paket</span>
                         </SectionTitle>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 items-start justify-items-center">
-                            {(first?.price_services || [])
+                            {priceServices
                                 .filter((ps) => ps.id_image_service === cat.id)
                                 .map((ps, i) => (
                                     <PricingCard
@@ -232,16 +234,24 @@ function DynamicPriceList({ data }) {
 }
 
 export default function PriceList({ data }) {
-    if ((data?.services?.price_services?.length ?? 0) > 0) {
+    // Ambil array categories / image_services dengan aman
+    const categories =
+        data?.services?.image_services ||
+        data?.services?.[0]?.image_services ||
+        [];
+
+    // Jika categories ada isinya, tampilkan list paket
+    if (categories.length > 0) {
         return <DynamicPriceList data={data} />;
     }
 
+    // Jika kosong, tampilkan empty state
     return (
         <section className="relative py-20 overflow-hidden">
             <div className="flex items-center justify-center">
                 <img
                     src="https://st2.depositphotos.com/18722762/88115/v/600/depositphotos_881154956-stock-illustration-data-vector-illustration-featuring-empty.jpg"
-                    alt=""
+                    alt="Data Kosong"
                 />
             </div>
         </section>
