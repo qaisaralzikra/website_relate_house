@@ -145,6 +145,8 @@ export default function PriceList({ data }) {
         return <DynamicPriceList services={targetData} />;
     }
 
+    console.log(targetData);
+
     // Jika tidak memenuhi syarat, tampilkan empty state
     return (
         <section className="relative py-20 overflow-hidden">
