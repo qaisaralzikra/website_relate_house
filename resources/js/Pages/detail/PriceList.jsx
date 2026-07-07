@@ -213,15 +213,15 @@ export default function PriceList({ data, isAdmin }) {
             {/* 2. Pengecekan data kosong dipindah ke bawah setelah menu navigasi */}
             {!selectedService?.price_services?.length ? (
                 <section className="relative py-20 overflow-hidden">
-                    <div className="flex flex-col items-center justify-center gap-4">
+                    <div className="flex flex-col items-center justify-center gap-4 text-center">
                         <img
                             src="https://st2.depositphotos.com/18722762/88115/v/600/depositphotos_881154956-stock-illustration-data-vector-illustration-featuring-empty.jpg"
                             alt="Data Kosong"
-                            className="max-w-xs"
+                            
                         />
-                        <p className="text-gray-500 font-medium">
+                        {/* <p className="text-gray-500 font-medium text-[20px]">
                             Belum ada paket tersedia untuk service ini.
-                        </p>
+                        </p> */}
                     </div>
                 </section>
             ) : (
