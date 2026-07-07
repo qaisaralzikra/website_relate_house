@@ -99,7 +99,7 @@ function PricingCard({ plan, index }) {
                     href="https://wa.me/6281242611972"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`mt-8 w-full py-3 rounded-xl font-semibold text-sm transition-colors shadow-lg ${
+                    className={`mt-8 w-full py-3 px-3 text-center rounded-xl font-semibold text-sm transition-colors shadow-lg ${
                         plan.popular
                             ? "bg-accent text-primary-dark hover:bg-accent-dark shadow-accent/30"
                             : "bg-primary text-white hover:bg-primary-dark"
