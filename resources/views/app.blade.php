@@ -44,12 +44,12 @@
 
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
+        "@@context": "https://schema.org",
+        "@@type": "LocalBusiness",
         "image": "{{ asset('assets/Logo Relate5.png') }}",
         "name": "Relate House",
         "address": {
-            "@type": "PostalAddress",
+            "@@type": "PostalAddress",
             "addressLocality": "Makassar",
             "addressRegion": "Sulawesi Selatan",
             "addressCountry": "ID"
@@ -59,7 +59,7 @@
         "telephone": "+6282192404308",
         "priceRange": "$$",
         "contactPoint": {
-            "@type": "ContactPoint",
+            "@@type": "ContactPoint",
             "telephone": "+62-821-9240-4308",
             "contactType": "customer service"
         }
