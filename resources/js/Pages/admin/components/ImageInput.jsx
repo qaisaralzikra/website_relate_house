@@ -35,11 +35,21 @@ export default function ImageInput({ value, onChange, label, accept }) {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        if (file.type.startsWith("video/")) {
-            setFileType("video");
-        } else {
+        // Pengecekan khusus untuk Gambar
+        if (file.type.startsWith("image/")) {
+            const maxSizeInBytes = 10 * 1024 * 1024; // 10 MB
+            if (file.size > maxSizeInBytes) {
+                alert("Ukuran gambar terlalu besar! Maksimal ukuran file adalah 10 MB.");
+                if (fileRef.current) {
+                    fileRef.current.value = ""; // Reset input HTML agar user bisa pilih file lain lagi
+                }
+                return; // Berhenti di sini, jangan panggil onChange
+            }
             setFileType("image");
+        } else if (file.type.startsWith("video/")) {
+            setFileType("video"); // Video lolos tanpa pengecekan ukuran sesuai request
         }
+        
         onChange(file);
     };
 

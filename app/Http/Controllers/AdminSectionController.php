@@ -298,6 +298,15 @@ class AdminSectionController extends Controller
 
                     if ($file && $file->isValid()) {
 
+                        // 🛑 TAMBAHKAN VALIDASI UKURAN DI SINI (Maksimal 10 MB dalam hitungan Bytes)
+                        $maxSizeInBytes = 10 * 1024 * 1024; // 10,485,760 Bytes
+                        if ($file->getSize() > $maxSizeInBytes) {
+                            // Anda bisa melempar error validation atau kembali dengan pesan error
+                            return redirect()->back()->withErrors([
+                                "items.{$index}.image" => "Ukuran file gambar tidak boleh melebihi 10 MB."
+                            ]);
+                        }
+
                         if (
                             $oldProject &&
                             $oldProject->image
