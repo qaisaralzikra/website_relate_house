@@ -90,6 +90,9 @@ function DynamicPriceList({ services }) {
     const categories = services?.image_services || [];
     const priceServices = services?.price_services || [];
 
+    console.log("Categories:", categories);
+    console.log("Price Services:", priceServices);
+
     return (
         <div>
             {categories.map((cat, catIndex) => (
