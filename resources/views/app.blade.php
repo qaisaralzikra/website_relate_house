@@ -42,29 +42,31 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
     </noscript>
 
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "image": "{{ asset('assets/Logo Relate5.png') }}",
-    "name": "Relate House",
-    "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Makassar",
-        "addressRegion": "Sulawesi Selatan",
-        "addressCountry": "ID"
-    },
-    "url": "{{ url('/') }}",
-    "logo": "{{ asset('assets/Logo Relate5.png') }}",
-    "telephone": "+6282192404308",
-    "priceRange": "$$",
-    "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+62-821-9240-4308",
-        "contactType": "customer service"
-    }
-}
-</script>
+    @verbatim
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                "image": "/assets/Logo Relate5.png",
+                "name": "Relate House",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Makassar",
+                    "addressRegion": "Sulawesi Selatan",
+                    "addressCountry": "ID"
+                },
+                "url": "https://relatehouse.id",
+                "logo": "/assets/Logo Relate5.png",
+                "telephone": "+6282192404308",
+                "priceRange": "$$",
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+62-821-9240-4308",
+                    "contactType": "customer service"
+                }
+            }
+        </script>
+    @endverbatim
 
     <title>Relate House - Produksi Creative dan Event Organizer Makassar</title>
     @viteReactRefresh
@@ -72,12 +74,11 @@
     @inertiaHead
 </head>
 
-<body>
-    {{-- <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">
+{{-- <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold">
         Langsung ke konten utama
     </a> --}}
 
-    @inertia
+@inertia
 </body>
 
 </html>
