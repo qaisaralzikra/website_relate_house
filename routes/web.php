@@ -18,6 +18,10 @@ Route::get('/clear-cache', function() {
     return "Cache berhasil dibersihkan! Silakan cek kembali halaman utama.";
 });
 
+Route::get('/cek-php', function () {
+    phpinfo();
+});
+
 Route::post('/logout', [AdminController::class, 'logout']);
 Route::post('/cta/send-email', [CtaSectionController::class, 'sendEmail']);
 Route::get('/detail/service/{id}', [HomeController::class, 'detailService']);
