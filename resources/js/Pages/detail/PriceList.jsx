@@ -112,17 +112,47 @@ function PricingCard({ plan, index }) {
     );
 }
 
-function DynamicPriceList({ services }) {
-    // Mengambil langsung dari prop 'services' yang sudah dipastikan aman
+function DynamicPriceList({ services, isAdmin }) {
     const categories = services?.image_services || [];
     const priceServices = services?.price_services || [];
+    const [selectedCatId, setSelectedCatId] = useState(
+        isAdmin ? (categories[0]?.id ?? null) : null,
+    );
 
-    console.log("Categories:", categories);
-    console.log("Price Services:", priceServices);
+    const filteredCategories = isAdmin
+        ? categories.filter((c) => c.id === selectedCatId)
+        : categories;
 
     return (
         <div>
-            {categories.map((cat, catIndex) => (
+            {isAdmin && categories.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2 px-4 sm:px-6 lg:px-[70px] pt-6 pb-2">
+                    <button
+                        onClick={() => setSelectedCatId(null)}
+                        className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                            selectedCatId === null
+                                ? "bg-primary text-white shadow-md"
+                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                        }`}
+                    >
+                        Semua
+                    </button>
+                    {categories.map((cat) => (
+                        <button
+                            key={cat.id}
+                            onClick={() => setSelectedCatId(cat.id)}
+                            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                                selectedCatId === cat.id
+                                    ? "bg-primary text-white shadow-md"
+                                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                            }`}
+                        >
+                            {cat.name}
+                        </button>
+                    ))}
+                </div>
+            )}
+            {filteredCategories.map((cat, catIndex) => (
                 <div key={cat.id} className="relative py-20 overflow-hidden">
                     <div className="h-[276px] mx-4 sm:mx-6 lg:mx-[70px] rounded-[40px] overflow-hidden relative text-center flex items-center justify-center mb-[40px]">
                         <img
@@ -169,20 +199,13 @@ function DynamicPriceList({ services }) {
     );
 }
 
-export default function PriceList({ data }) {
-    // DETEKSI: Inertia biasa mengirim data langsung atau dibungkus dalam properti (misal data.services)
-    // Jalur A: Jika data yang dikirim adalah objek yang Anda sebutkan
-    // Jalur B: Jika objek tersebut dibungkus di dalam data.services
+export default function PriceList({ data, isAdmin }) {
     const targetData = data?.image_services ? data : data?.services || null;
 
-    // Cek apakah data valid dan memiliki price_services
     if (targetData && targetData?.price_services?.length > 0) {
-        return <DynamicPriceList services={targetData} />;
+        return <DynamicPriceList services={targetData} isAdmin={isAdmin} />;
     }
 
-    console.log(targetData);
-
-    // Jika tidak memenuhi syarat, tampilkan empty state
     return (
         <section className="relative py-20 overflow-hidden">
             <div className="flex items-center justify-center">

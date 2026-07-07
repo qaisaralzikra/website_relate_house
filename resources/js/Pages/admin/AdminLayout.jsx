@@ -389,7 +389,10 @@ export default function AdminLayout({
                                             <CtaSection data={ctaData} />
                                         )}
                                         {page === "priceData" && (
-                                            <PriceList data={priceData} />
+                                            <PriceList
+                                                data={priceData}
+                                                isAdmin={true}
+                                            />
                                         )}
                                         {page === "footer" && (
                                             <Footer data={footer} />

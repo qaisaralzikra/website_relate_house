@@ -6,6 +6,7 @@
 - PHP 8.3+, SQLite (local `.env.example` default) / MySQL (intended prod)
 - Database-driven session, queue, cache (defaults in config/*.php)
 - `.npmrc` has `ignore-scripts=true` — `npm install --ignore-scripts` is implicit
+- Mail defaults to Gmail SMTP (`MAIL_HOST=smtp.gmail.com`, port 587, TLS) in `.env.example`
 - Laravel 13 uses `bootstrap/app.php` for middleware registration (no `Http/Kernel.php`)
 
 ## Architecture quirks
@@ -39,11 +40,14 @@
 ## Testing
 - `phpunit.xml` uses SQLite `:memory:` — no external DB, no migrate needed.
 - CI in `.github/workflows/tests.yml`: `cp .env.example .env`, `php artisan key:generate`, `php artisan test` on PHP 8.3/8.4/8.5 with `pdo_sqlite`.
+- `BCRYPT_ROUNDS=4` set in phpunit.xml for faster test hashing.
 - No JS tests exist.
 
 ## Tooling
 - `.env` is gitignored; copy from `.env.example`, run `php artisan key:generate`.
 - Static images used by React components live in `public/assets/` (imported in `resources/js/data/defaults.js`).
 - Charting: `recharts` available for React chart components.
+- Animations: `framer-motion` for React animation components.
+- Vite HMR can be customized via `VITE_HMR_HOST`, `VITE_HMR_PORT`, `VITE_HMR_PROTOCOL`, `VITE_ALLOWED_HOSTS` env vars (needed for remote/Docker dev).
 - Admin component helpers in `resources/js/Pages/admin/components/`: `GradientPicker`, `ImageInput`, `ListEditor`.
 - Custom hooks in `resources/js/hooks/`: `useCountUp`, `useOnScreen`.
