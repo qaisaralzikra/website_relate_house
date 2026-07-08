@@ -863,7 +863,7 @@ class AdminSectionController extends Controller
 
     protected function savePrice(Request $request): mixed
     {
-        // dd($request->all());
+        // dd($request->all(), $request->file());
 
         $idBanom = $request->input('id_banom');
         $banom = Banom::find($idBanom);
@@ -1021,13 +1021,25 @@ class AdminSectionController extends Controller
             PriceService::where('id_banom', $idBanom)
                 ->whereNotIn('id', $savedPriceIds)
                 ->delete();
-
+            
             DB::commit(); // Terapkan perubahan jika sukses semua
+
+
+dd(
+    ImageService::count(),
+    PriceService::count(),
+    ListPaket::count()
+);
             return back();
-        } catch (\Exception $e) {
-            DB::rollBack(); // Batalkan semua jika ada error
-            return back()->withErrors(['error' => 'Gagal menyimpan data: ' . $e->getMessage()]);
-        }
+        } catch (\Throwable $e) {
+    DB::rollBack();
+
+    dd(
+        $e->getMessage(),
+        $e->getFile(),
+        $e->getLine()
+    );
+}
     }
 
     public function saveGalleryItem(Request $request)
