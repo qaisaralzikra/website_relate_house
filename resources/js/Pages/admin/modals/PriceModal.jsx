@@ -22,6 +22,8 @@ export default function PriceModal({ data, onSave, onClose }) {
 
     const [categories, setCategories] = useState([]);
 
+    console.log("services", services);
+
     const banom = services.find((s) => s.id === selectedBanomId);
 
     function tempId() {

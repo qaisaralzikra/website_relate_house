@@ -1,0 +1,1 @@
+import{i as e}from"./vendor-framer-BMsFrIG6.js";import t from"./AdminLayout-CVh5TMtM.js";var n=e();function r(e){return(0,n.jsx)(t,{...e})}export{r as default};
