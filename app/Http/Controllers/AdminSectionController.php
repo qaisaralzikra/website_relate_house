@@ -1025,11 +1025,11 @@ class AdminSectionController extends Controller
             DB::commit(); // Terapkan perubahan jika sukses semua
 
 
-dd(
-    ImageService::count(),
-    PriceService::count(),
-    ListPaket::count()
-);
+// dd(
+//     ImageService::count(),
+//     PriceService::count(),
+//     ListPaket::count()
+// );
             return back();
         } catch (\Throwable $e) {
     DB::rollBack();
