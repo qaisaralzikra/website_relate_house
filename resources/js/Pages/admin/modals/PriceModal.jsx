@@ -38,7 +38,7 @@ export default function PriceModal({ data, onSave, onClose }) {
                 name: is.name || "",
                 image: is.image || "",
                 pakets: (banom.price_services || [])
-                    .filter((p) => p.id_image_service === is.id)
+                    .filter((p) => Number(p.id_image_service) === Number(is.id))
                     .map((p) => ({
                         _id: p.id || tempId(),
                         id: p.id || null,
