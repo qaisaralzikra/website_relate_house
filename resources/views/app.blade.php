@@ -43,27 +43,37 @@
     </noscript>
 
     <script type="application/ld+json">
-        {
-            "@@context": "https://schema.org",
-            "@@type": "LocalBusiness",
-            "name": "Relate House",
-            "url": "https://relatehouse.id",
-            "logo": "{{ asset('assets/Logo Relate5.png') }}",
-            "image": "{{ asset('assets/Logo Relate5.png') }}",
-            "telephone": "+6282192404308",
-            "priceRange": "$$",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Makassar",
-                "addressRegion": "Sulawesi Selatan",
-                "addressCountry": "ID"
-            },
-            "contactPoint": {
-                "@@type": "ContactPoint",
-                "telephone": "+62-821-9240-4308",
-                "contactType": "customer service"
-            }
-        }
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Relate House",
+      "url": "{{ url('/') }}",
+      "logo": "{{ asset('assets/Logo Relate5.png') }}",
+      "image": "{{ asset('assets/Logo Relate5.png') }}",
+      "telephone": "+6282192404308",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Makassar",
+        "addressRegion": "Sulawesi Selatan",
+        "addressCountry": "ID"
+      },
+      "areaServed": {
+        "@type": "AdministrativeArea",
+        "name": "Makassar"
+      },
+      "knowsAbout": [
+        "Event Organizer",
+        "Event Management",
+        "Corporate Event",
+        "Gathering"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+6282192404308",
+        "contactType": "customer service"
+      }
+    }
     </script>
 
     <title>Relate House - Produksi Creative dan Event Organizer Makassar</title>
